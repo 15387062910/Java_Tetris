@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+
+	<frame width="1200" height="700" padding="9" windowszie="7">
+		<lay class="ui.LayBackgound" x="0" y="0" w="0" h="0"/>
+		<lay class="ui.LayDataBase" x="40" y="32" w="334" h="279"/>
+		<lay class="ui.LayDisk" x="40" y="343" w="334" h="279"/>
+		<lay class="ui.LayGame" x="414" y="32" w="334" h="590"/>
+		<lay class="ui.LayButton" x="788" y="32" w="334" h="124"/>
+		<lay class="ui.LayNext" x="778" y="188" w="176" h="148"/>
+		<lay class="ui.LayLevel" x="964" y="188" w="158" h="148"/>
+		<lay class="ui.LayPoint" x="788" y="368" w="334" h="148"/>
+		<lay class="ui.LayAbout" x="788" y="546" w="334" h="78"/>
+	</frame>
+	
+	<system>
+	
+	</system>
+
+	<data>
+	
+	</data>
+
+</game>
