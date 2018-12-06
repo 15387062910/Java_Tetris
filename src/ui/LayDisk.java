@@ -5,12 +5,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-/*
- * 绘制本地记录类
- * 
- * */
 public class LayDisk extends Lay {
-	// 本地记录字样的图片
 	private static Image IMG_DISK = new ImageIcon("graphics/string/disk.png").getImage();
 	
 	public LayDisk(int x, int y, int w, int h){

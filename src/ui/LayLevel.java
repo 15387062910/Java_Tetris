@@ -6,7 +6,6 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class LayLevel extends Lay {
-	// 等级字样的图片
 	private static Image IMG_LEVEL = new ImageIcon("graphics/string/level.png").getImage();
 	
 	public LayLevel(int x, int y, int w, int h){

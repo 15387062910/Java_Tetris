@@ -5,12 +5,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-/*
- * 绘制数据库窗口类
- * 
- * */
 public class LayDataBase extends Lay {
-	// 数据库字样的图片
 	private static Image IMG_DB = new ImageIcon("graphics/string/db.png").getImage();
 	
 	public LayDataBase(int x, int y, int w, int h){
