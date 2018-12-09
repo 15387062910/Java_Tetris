@@ -1,12 +1,8 @@
 package ui;
 
 import java.awt.Graphics;
-import java.awt.Image;
-
-import javax.swing.ImageIcon;;
 
 public class LayBackground extends Lay {
-	private static Image IMG_GB_TEMP = new ImageIcon("graphics/background/Sea.jpg").getImage();
 	
 	public LayBackground(int x, int y, int w, int h){
 		super(x, y, w, h);
@@ -14,7 +10,7 @@ public class LayBackground extends Lay {
 	
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(IMG_GB_TEMP, 0, 0, 1200, 700, null);	
+		g.drawImage(Img.IMG_GB_TEMP, 0, 0, 1200, 700, null);	
 	}
 
 }

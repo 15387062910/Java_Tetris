@@ -1,12 +1,11 @@
 package ui;
 
-import java.awt.Graphics;
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
+import java.awt.*;
 
 public class LayLevel extends Lay {
-	private static Image IMG_LEVEL = new ImageIcon("graphics/string/level.png").getImage();
+	
+	// 标题图片的宽度
+	private static final int IMG_LV_W = Img.IMG_LEVEL.getWidth(null);
 	
 	public LayLevel(int x, int y, int w, int h){
 		super(x, y, w, h);
@@ -14,6 +13,11 @@ public class LayLevel extends Lay {
 	
 	public void paint(Graphics g){
 		this.createWindow(g);
-		g.drawImage(IMG_LEVEL, this.x+PADDING, this.y+PADDING, null);
+		// 窗口标题
+		int centerX = this.w - IMG_LV_W >> 1;
+		g.drawImage(Img.IMG_LEVEL, this.x + centerX, this.y+PADDING, null);
+		// 显示等级
+		this.drawNumber(centerX, 56, this.dto.getLevel(), g);
 	}
+
 }

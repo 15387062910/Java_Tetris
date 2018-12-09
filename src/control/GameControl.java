@@ -15,10 +15,44 @@ public class GameControl {
 		this.panelGame = panelGame;
 		this.gameService = gameService;
 	}
-
-	public void test() {
-		this.gameService.gameTest();
-		// 重绘页面
-		this.panelGame.repaint();
+	
+	// 控制器方向键 旋转
+	public void KeySpace() {
+		this.gameService.KeySpace();
+		this.panelGame.repaint();		// 重绘页面
 	}
+
+	// 控制器方向键  向上
+	public void KeyUp() {
+		this.gameService.KeyUp();
+		this.panelGame.repaint();		// 重绘页面
+	}
+
+	// 控制器方向键  向下
+	public void KeyDown() {
+		this.gameService.KeyDown();
+		this.panelGame.repaint();		// 重绘页面
+	}
+
+	// 控制器方向键  向左
+	public void KeyLeft() {
+		this.gameService.KeyLeft();
+		this.panelGame.repaint();		// 重绘页面
+	}
+
+	// 控制器方向键  向右
+	public void KeyRight() {
+		this.gameService.KeyRight();
+		this.panelGame.repaint();		// 重绘页面
+	}
+	
+	// =============================================
+	// TODO 测试方法
+	public void test(){
+		System.out.println("test in GameControl");
+		// test
+		 this.gameService.test();
+		 this.panelGame.repaint();		// 重绘页面
+	}
+	
 }

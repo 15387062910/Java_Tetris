@@ -7,6 +7,7 @@ Tetris
 ### 项目目录结构
 * bin: 
 * config:
+* docs: 
 * graphics: 
 * lib: 
 * src:  

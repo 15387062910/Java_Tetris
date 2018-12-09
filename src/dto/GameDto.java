@@ -15,6 +15,18 @@ public class GameDto {
 	private boolean[][] gameMap;
 	private GameAct gameAct;
 	
+	// 构造方法
+	public GameDto(){
+		dtoInit();
+	}
+	
+	// dto初始化
+	public void dtoInit(){
+		// 初始化gameMap
+		this.gameMap = new boolean[10][18];
+		// 初始化所有游戏对象
+	}
+	
 	public List<Player> getDbRecode() {
 		return dbRecode;
 	}
@@ -75,4 +87,5 @@ public class GameDto {
 	public void setNowRemoveLine(int nowRemoveLine) {
 		this.nowRemoveLine = nowRemoveLine;
 	}
+
 }
