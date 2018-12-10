@@ -1,6 +1,13 @@
 package dto;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Comparable<Player>, Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1560262108930690698L;
 	private String name;
 	private int point;
 	
@@ -23,5 +30,11 @@ public class Player {
 
 	public int getPoint() {
 		return point;
+	}
+
+	@Override
+	public int compareTo(Player pla) {
+			
+		return pla.point - this.point;
 	}
 }

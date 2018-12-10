@@ -18,6 +18,8 @@ public class Main {
 		GameService service = new GameService(dto);
 		// 创建游戏控制器(连接游戏面板和游戏逻辑块)
 		GameControl gameControl = new GameControl(panelGame, service);
+		// 设置游戏面板的游戏控制器对象
+		panelGame.setGameControl(gameControl);
 		// 创建玩家控制器(连接游戏控制器)
 		PlayerControl control = new PlayerControl(gameControl);
 		// 安装玩家控制器

@@ -1,9 +1,10 @@
 package service;
 
+import java.util.List;
+import java.util.Random;
 import java.awt.*;
-import java.util.*;
 
-import dto.GameDto;
+import dto.*;
 import entity.GameAct;
 
 // 游戏逻辑层
@@ -80,5 +81,13 @@ public class GameService {
 		
 		
 	}
-
+	
+	public void setRecodeDataBase(List<Player> players){
+		this.dto.setDbRecode(players);
+	}
+	
+	public void setRecodeDisk(List<Player> players){
+		this.dto.setDiskRecode(players);
+	}
+	
 }

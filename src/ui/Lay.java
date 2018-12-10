@@ -12,8 +12,10 @@ import dto.GameDto;
  * 
  * */
 abstract public class Lay {
+	// 内边距
 	protected static final int PADDING = 17;
-	private static final int SIZE = 7;
+	// 边框宽度
+	protected static final int SIZE = 7;
 
 	// 边框的宽和高
 	private static final int IMGW = Img.IMG.getWidth(null);
@@ -30,10 +32,10 @@ abstract public class Lay {
 	protected static final int IMG_NUMBER_H = Img.IMG_NUMBER.getHeight(null);
 
 	// 矩形值槽图片宽度
-	private static final int IMG_RECT_W = Img.IMG_RECT.getWidth(null);
+	protected static final int IMG_RECT_W = Img.IMG_RECT.getWidth(null);
 
 	// 矩形值槽图片高度
-	private static final int IMG_RECT_H = Img.IMG_RECT.getHeight(null);
+	protected static final int IMG_RECT_H = Img.IMG_RECT.getHeight(null);
 
 	// 经验值槽的宽度
 	private final int expW;
@@ -121,7 +123,7 @@ abstract public class Lay {
 		g.drawString(title, rect_x + 4, rect_y + 22);
 		if (number != null) {
 			// TODO 绘制数值
-
+			g.drawString(number, rect_x + 230, rect_y + 22);
 		}
 	}
 

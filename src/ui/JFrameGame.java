@@ -1,7 +1,7 @@
 package ui;
 
-import java.awt.Toolkit;
 import javax.swing.JFrame;
+import utils.FrameUtil;
 
 public class JFrameGame extends JFrame{
 	/**
@@ -14,10 +14,7 @@ public class JFrameGame extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1200, 700);
 		this.setResizable(false);
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		int x = (int)(toolkit.getScreenSize().getWidth()-this.getWidth())/2;
-		int y = (int)(toolkit.getScreenSize().getHeight()-this.getHeight())/2 - 36;
-		this.setLocation(x, y);
+		FrameUtil.setFrameCenter(this);
 	}
 	
 	public JFrameGame(JPanelGame panelGame){
