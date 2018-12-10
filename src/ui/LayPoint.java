@@ -14,7 +14,7 @@ public class LayPoint extends Lay {
 	private final int expY;
 	
 	// 每到LEVEL_UP矩形值槽满
-	private static final int LEVEL_UP = 13;
+	private static final int LEVEL_UP = 10;
 
 	public LayPoint(int x, int y, int w, int h) {
 		super(x, y, w, h);

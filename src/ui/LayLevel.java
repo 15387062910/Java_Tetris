@@ -17,7 +17,7 @@ public class LayLevel extends Lay {
 		int centerX = this.w - IMG_LV_W >> 1;
 		g.drawImage(Img.IMG_LEVEL, this.x + centerX, this.y+PADDING, null);
 		// 显示等级
-		this.drawNumber(centerX, 56, this.dto.getLevel(), g);
+		this.drawNumber(centerX, 56, this.dto.getNowLevel(), g);
 	}
 
 }

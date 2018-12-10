@@ -7,6 +7,11 @@ import entity.GameAct;
 import ui.LayData;
 
 public class GameDto {
+	
+	// 游戏宽度和高度
+	public static final int GAMEZON_W = 10;
+	public static final int GAMEZON_H = 18;
+	
 	/*
 	 * dbRecode: 数据库记录 diskRecode: 本地记录 gameMap: 游戏地图 gameAct: 下落方块
 	 */
@@ -92,11 +97,11 @@ public class GameDto {
 		this.next = next;
 	}
 
-	public int getLevel() {
+	public int getNowLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setNowLevel(int level) {
 		this.level = level;
 	}
 
