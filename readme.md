@@ -12,12 +12,12 @@ Tetris
 * src: 源文件
 
 ### src下的包
-* config:	
-* dao: 		
-* dto:		
-* entity:	
-* main:
-* service:	
-* ui:	
-* ui.cgf:	
-* utils:		
+* config: 项目配置相关类包	
+* dao: 数据处理类(读数据 存数据)包		
+* dto: 数据对象类包		
+* entity: 实体类包
+* main: 项目主入口类包
+* service: 项目主逻辑类包
+* ui: 项目界面类包
+* ui.cgf: 项目的设置界面类包	
+* utils: 项目工具类包		
