@@ -1,63 +1,22 @@
 package utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
+// 统计项目src下的代码行数
 public class CodeCount{
     
+	/*
+	 * code: 有效代码行数
+	 * codeComments: 注释行数
+	 * codeBlank: 空行数
+	 * */
     private static Integer code = 0;
     private static Integer codeComments = 0;
     private static Integer codeBlank = 0;
     
+    // for test
     public static void main(String[] args) {
-        File file = new File("D:\\wyb\\java\\student_java\\src");
-        factFiles(file);
-        System.out.println("代码行数" + code);
-        System.out.println("空白行数" + codeBlank);
-        System.out.println("注释行数" + codeComments);
-    }
-    
-    public static void factFiles(File file) {
-        BufferedReader br = null;
-        String s = null;
-        
-        if(file.isDirectory()) {
-            File[] files = file.listFiles();
-            for(File f : files) {
-                factFiles(f);
-            }
-        } else {
-            try {
-                br = new BufferedReader(new FileReader(file));
-                boolean comm = false;
-                while((s = br.readLine()) != null) {
-                    if(s.startsWith("/*") && s.endsWith("*/")) {
-                        codeComments++;
-                    } else if(s.trim().startsWith("//")) {
-                        codeComments++;
-                    } else if(s.startsWith("/*") && !s.endsWith("*/")) {
-                        codeComments++;
-                        comm = true;
-                    } else if(!s.startsWith("/*") && s.endsWith("*/")) {
-                        codeComments++;
-                        comm = false;
-                    } else if(comm) {
-                        codeComments++;
-                    } else if(s.trim().length() < 1) {
-                        codeBlank++;
-                    } else {
-                        code++;
-                    }
-                }
-                br.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+		
+	}
+   
 }
