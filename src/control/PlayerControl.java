@@ -2,15 +2,20 @@ package control;
 
 import java.awt.event.*;
 
+import dto.GameDto;
+
 public class PlayerControl extends KeyAdapter {
 
 	/*
 	 * gameControl: 游戏控制器 获取游戏控制器以调用其中的方法
+	 * dto: 游戏数据: 获取游戏相关数据
 	 */
 	private GameControl gameControl;
-
-	public PlayerControl(GameControl gameControl) {
+	private GameDto dto;
+	
+	public PlayerControl(GameControl gameControl, GameDto dto) {
 		this.gameControl = gameControl;
+		this.dto = dto;
 	}
 
 	/*
@@ -23,7 +28,13 @@ public class PlayerControl extends KeyAdapter {
 
 		// 重绘页面
 		// this.gameControl.test();
-
+		
+		// 还没有开始或者游戏结束时不允许按键
+		if(!this.dto.isStart()){
+			return;
+		}
+		
+		// TODO 改成HashMap结构
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_SPACE:
 				// 空格键
@@ -45,10 +56,18 @@ public class PlayerControl extends KeyAdapter {
 				// 向右
 				this.gameControl.KeyRight();
 				break;
-			
-			case KeyEvent.VK_T:
-				// t键 用于测试
-				this.gameControl.test();
+			case KeyEvent.VK_1:
+				// 1
+				this.gameControl.KeyFunDown();
+				break;
+			case KeyEvent.VK_V:
+				// V
+				this.gameControl.KeyShadowSwitch();
+				break;
+			case KeyEvent.VK_S:
+				// S
+				this.gameControl.KeyStop();
+				break;
 			default:
 				break;
 		}

@@ -121,4 +121,26 @@ public class GameDto {
 		this.nowRemoveLine = nowRemoveLine;
 	}
 
+	// 是否开始游戏
+	private boolean start;
+	// 是否显示阴影
+	private boolean showShadow;
+	
+	public void setStart(boolean start) {
+		this.start = start;
+	}
+
+	public boolean isStart() {
+		return start;
+	}
+
+	public boolean getShowShadow() {
+		return showShadow;
+	}
+
+	public void changeShowShadow() {
+		this.showShadow = !this.showShadow;
+	}
+	
+
 }

@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.*;
+import entity.GameAct;
 
 public class LayGame extends Lay {
 
@@ -18,19 +19,35 @@ public class LayGame extends Lay {
 	public void paint(Graphics g) {
 		this.createWindow(g);
 		// 获得方块数组集合
-		Point[] points = this.dto.getGameAct().getActPoints();
-		// 绘制阴影
-		// TODO 阴影关闭
-		this.drawShadow(points, true, g);
+		GameAct act = this.dto.getGameAct();
+		if (act != null) {
+			Point[] points = act.getActPoints();
+			// 绘制阴影
+			this.drawShadow(points, g);
+			// 绘制活动方块
+			this.drawMainAct(points, g);
+		}
+
+		// 绘制游戏地图
+		this.drawMap(g);
+	}
+
+	// 绘制活动方块
+	private void drawMainAct(Point[] points, Graphics g) {
 		// 获得方块类型编号( 0 - 6)
 		int typeCode = this.dto.getGameAct().getTypeCode();
 		// 绘制方块
 		for (int i = 0; i < points.length; i++) {
-			drawActByPoint(points[i].x, points[i].y, typeCode + 1, g);
+			this.drawActByPoint(points[i].x, points[i].y, typeCode + 1, g);
 		}
 
-		// 绘制地图
+	}
+
+	// 绘制游戏地图
+	private void drawMap(Graphics g) {
+		// 获得地图数组
 		boolean[][] map = this.dto.getGameMap();
+		// 绘制地图
 		for (int x = 0; x < map.length; x++) {
 			for (int y = 0; y < map[x].length; y++) {
 				if (map[x][y]) {
@@ -38,11 +55,12 @@ public class LayGame extends Lay {
 				}
 			}
 		}
+
 	}
 
 	// 绘制阴影
-	private void drawShadow(Point[] points, boolean isShowShadow, Graphics g) {
-		if (!isShowShadow) {
+	private void drawShadow(Point[] points, Graphics g) {
+		if (!this.dto.getShowShadow()) {
 			return;
 		}
 		int leftX = RIGHT_SIDE;
@@ -52,17 +70,15 @@ public class LayGame extends Lay {
 			rightX = p.x > rightX ? p.x : rightX;
 			// System.out.println(leftX + " " + rightX);
 		}
-		g.drawImage(Img.IMG_SHADOW, 
-				this.x + SIZE + (leftX * SIZE_ROL), 
-				this.y + SIZE, 
-				(rightX - leftX + 1) * SIZE_ROL, 
-				this.h - (SIZE * 2),
+		g.drawImage(Img.IMG_SHADOW, this.x + SIZE + (leftX * SIZE_ROL), this.y
+				+ SIZE, (rightX - leftX + 1) * SIZE_ROL, this.h - (SIZE * 2),
 				null);
 
 	}
 
 	// 绘制中正方形块
 	private void drawActByPoint(int x, int y, int imgIndex, Graphics g) {
+		imgIndex = this.dto.isStart() ? imgIndex : 0;
 		g.drawImage(Img.ACT, this.x + x * SIZE_ROL + 7, this.y + y * SIZE_ROL
 				+ 7, this.x + x * SIZE_ROL + SIZE_ROL + 7, this.y + y
 				* SIZE_ROL + SIZE_ROL + 7, imgIndex * SIZE_ROL, 0, imgIndex

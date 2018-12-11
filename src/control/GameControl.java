@@ -16,6 +16,7 @@ public class GameControl {
 	/*
 	 * panelGame:	游戏界面层
 	 * gameService: 游戏逻辑层 
+	 * dto: 游戏数据层
 	 * */
 	private JPanelGame panelGame;
 	private GameService gameService;
@@ -76,13 +77,32 @@ public class GameControl {
 		this.frameConfig.setVisible(true);
 	}
 	
-	// =============================================
-	// TODO 测试方法
-	public void test(){
-		System.out.println("test in GameControl");
-		// test
-		 this.gameService.test();
-		 this.panelGame.repaint();		// 重绘页面
+	// 开始按钮事件
+	public void start() {
+		// 禁止按键使用(开始和设置)
+		this.panelGame.buttonSwitch(false);
+		// 开始游戏
+		this.gameService.startMainThread();
+		this.panelGame.repaint();		// 重绘页面
+		
+	}
+
+	// 瞬间下落
+	public void KeyFunDown(){
+		this.gameService.KeyFunDown();
+		this.panelGame.repaint();		// 重绘页面
+	}
+	
+	// 阴影开关
+	public void KeyShadowSwitch(){
+		this.gameService.KeyShadowSwitch();
+		this.panelGame.repaint();		// 重绘页面
+	}
+	
+	// 暂停游戏
+	public void KeyStop(){
+		this.gameService.KeyStop();
+		this.panelGame.repaint();		// 重绘页面
 	}
 	
 }

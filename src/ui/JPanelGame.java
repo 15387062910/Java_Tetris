@@ -56,6 +56,15 @@ public class JPanelGame extends JPanel {
 		// 添加按钮到面板
 		this.add(btnStart);
 		this.add(btnConfig);
+		// 开始按钮的处理事件
+		this.btnStart.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gameControl.start();
+			}
+		});
+		// 设置按钮的处理事件
 		this.btnConfig.addActionListener(new ActionListener() {
 			
 			@Override
@@ -94,6 +103,12 @@ public class JPanelGame extends JPanel {
 		}
 		// 返回焦点
 		this.requestFocus();
+	}
+	
+	// 控制按钮是否可点击
+	public void buttonSwitch(boolean onOff){
+		this.btnConfig.setEnabled(onOff);
+		this.btnStart.setEnabled(onOff);
 	}
 	
 	// 设置Panel的游戏控制器对象
