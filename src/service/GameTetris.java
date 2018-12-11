@@ -1,7 +1,6 @@
 package service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -41,94 +40,100 @@ public class GameTetris implements GameService{
 	public GameTetris(GameDto dto) {
 		this.dto = dto;
 	}
-	
-	// 设置数据库记录
-	public boolean setRecodeDataBase(List<Player> players) {
-		this.dto.setDbRecode(players);
-		return true;
-	}
 
-	// 设置本地记录
-	public boolean setRecodeDisk(List<Player> players) {
-		this.dto.setDiskRecode(players);
-		return true;
-	}
-
-
-	// 控制器方向键 旋转
+	// 控制器方向键 空格键
+	@Override
 	public boolean KeySpace() {
-		this.dto.getGameAct().round(this.dto.getGameMap());
+		this.KeyStop();
 		return true;
 	}
 
 	// 控制器方向键 向上
+	@Override
 	public boolean KeyUp() {
-		this.dto.getGameAct().move(0, -1, this.dto.getGameMap());
+		// 旋转
+		synchronized (this.dto) {
+			// 独占dto
+			this.dto.getGameAct().round(this.dto.getGameMap());
+		}
 		return true;
 	}
 
 	// 控制器方向键 向下
+	@Override
 	public boolean KeyDown() {
-		// 获得游戏地图对象
-		boolean[][] map = this.dto.getGameMap();
-		// 成功移动后返回
-		if (this.dto.getGameAct().move(0, 1, map)) {
-			return true;
-		}
-		// 获得方块对象
-		Point[] act = this.dto.getGameAct().getActPoints();
-		// 将方块堆积到地图数组
-		for (int i = 0; i < act.length; i++) {
-			map[act[i].x][act[i].y] = true;
-		}
-
-		// 判断消行 并计算经验值
-		int plusExp = this.plusExp();
-		// 如果发生消行 就加分升级
-		if (plusExp > 0) {
-			this.plusPoint(plusExp);
-		}
-
-		// 创建下一个方块
-		this.dto.getGameAct().init(this.dto.getNext());
-		// 随机生成下一个方块
-		this.dto.setNext(random.nextInt(MAX_TYPE));
-		
-		// 检查游戏是否失败
-		if(this.isLose()){
-			this.afterLose();
+		synchronized (this.dto){
+			// 获得游戏地图对象
+			boolean[][] map = this.dto.getGameMap();
+			// 成功移动后返回
+			if (this.dto.getGameAct().move(0, 1, map)) {
+				return true;
+			}
+			// 获得方块对象
+			Point[] act = this.dto.getGameAct().getActPoints();
+			// 将方块堆积到地图数组
+			for (int i = 0; i < act.length; i++) {
+				map[act[i].x][act[i].y] = true;
+			}
+	
+			// 判断消行 并计算经验值
+			int plusExp = this.plusExp();
+			// 如果发生消行 就加分升级
+			if (plusExp > 0) {
+				this.plusPoint(plusExp);
+			}
+	
+			// 创建下一个方块
+			this.dto.getGameAct().init(this.dto.getNext());
+			// 随机生成下一个方块
+			this.dto.setNext(random.nextInt(MAX_TYPE));
+			
+			// 检查游戏是否失败
+			if(this.isLose()){
+				this.afterLose();
+			}
 		}
 		
 		return false;
 	}
 
 	// 控制器方向键 向左
+	@Override
 	public boolean KeyLeft() {
-		this.dto.getGameAct().move(-1, 0, this.dto.getGameMap());
+		synchronized (this.dto) {
+			this.dto.getGameAct().move(-1, 0, this.dto.getGameMap());
+		}
+		
 		return true;
 	}
 
 	// 控制器方向键 向右
+	@Override
 	public boolean KeyRight() {
-		this.dto.getGameAct().move(1, 0, this.dto.getGameMap());
+		synchronized (this.dto) {
+			this.dto.getGameAct().move(1, 0, this.dto.getGameMap());
+		}
+		
 		return true;
 	}
 	
-	// 启动主线程
-	public boolean startMainThread() {
-		// 随机生成下一个方块
-		this.dto.setNext(random.nextInt(MAX_TYPE));
-		// 随机生成画面方块
-		this.dto.setGameAct(new GameAct(random.nextInt(MAX_TYPE)));
-		// 把游戏状态设置为开始
-		this.dto.setStart(true);
-		// TODO 开启游戏主线程
+	// 开始游戏
+	@Override
+	public boolean startGame() {
+		synchronized (this.dto) {
+			// 随机生成下一个方块
+			this.dto.setNext(random.nextInt(MAX_TYPE));
+			// 随机生成画面方块
+			this.dto.setGameAct(new GameAct(random.nextInt(MAX_TYPE)));
+			// 把游戏状态设置为开始
+			this.dto.setStart(true);
+		}
 		
 		return true;
 	}
 
 
-	// 消行操作 -> 一行就是三点经验值
+	// 消行操作 -> 一行就是LINE_EXP点经验值
 	private int plusExp() {
 		// 获得游戏地图
 		boolean[][] map = this.dto.getGameMap();
@@ -187,7 +192,7 @@ public class GameTetris implements GameService{
 	}
 	
 	// 检查游戏是否失败
-	public boolean isLose(){
+	private boolean isLose(){
 		// 获得现在的活动方块
 		Point[] actPoint = this.dto.getGameAct().getActPoints();
 		// 获得现在的游戏地图
@@ -202,13 +207,20 @@ public class GameTetris implements GameService{
 	}
 	
 	// 游戏失败后的处理
-	public void afterLose(){
+	private void afterLose(){
 		// 设置游戏开始状态为false
 		this.dto.setStart(false);
 		// TODO 关闭游戏主线程
 	}
 	
+	// 作弊开挂键
+	@Override
+	public void kaigua(){
+		this.plusPoint(3);
+	}
+	
 	// 方块快速下落
+	@Override
 	public boolean KeyFunDown(){
 		// 不断调用方块下落函数实现方块快速下落
 		while(this.KeyDown());
@@ -216,17 +228,28 @@ public class GameTetris implements GameService{
 	}
 	
 	// 方块下落阴影开关
+	@Override
 	public boolean KeyShadowSwitch(){
-		this.dto.changeShowShadow();
+		synchronized (this.dto) {
+			this.dto.changeShowShadow();
+		}
+		
 		return true;
 	}
 
 	// 暂停游戏
+	@Override
 	public boolean KeyStop(){
 		// TODO
 		System.out.println("暂停游戏");
 		
 		return true;
+	}
+	
+	@Override
+	public void mainAction(){
+		this.KeyDown();
+		
 	}
 	
 }

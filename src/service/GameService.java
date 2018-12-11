@@ -1,18 +1,7 @@
 package service;
 
-import dto.*;
-import java.util.List;
-
 // 游戏逻辑层的接口
 public interface GameService {
-
-	// 设置数据库记录
-	public boolean setRecodeDataBase(List<Player> players);
-
-	// 设置本地记录
-	public boolean setRecodeDisk(List<Player> players);
-
-
 	// 控制器方向键 旋转
 	public boolean KeySpace();
 
@@ -28,8 +17,8 @@ public interface GameService {
 	// 控制器方向键 向右
 	public boolean KeyRight();
 	
-	// 启动主线程 开始游戏
-	public boolean startMainThread();
+	// 开始游戏
+	public boolean startGame();
 	
 	// 方块快速下落
 	public boolean KeyFunDown();
@@ -39,8 +28,10 @@ public interface GameService {
 	
 	// 暂停游戏
 	public boolean KeyStop();
+	
+	// 游戏主要行为
+	public void mainAction();
 
-
-
-
+	// 开挂键(直接加分)
+	public void kaigua();
 }

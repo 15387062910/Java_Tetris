@@ -68,6 +68,10 @@ public class PlayerControl extends KeyAdapter {
 				// S
 				this.gameControl.KeyStop();
 				break;
+			case KeyEvent.VK_K:
+				// K
+				this.gameControl.kaigua();
+				break;
 			default:
 				break;
 		}

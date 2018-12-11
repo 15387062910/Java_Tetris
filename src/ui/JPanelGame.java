@@ -14,9 +14,8 @@ import dto.GameDto;
 public class JPanelGame extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	// 子Lay和游戏数据对象
+	// 子Lay
 	private Lay[] lays = null;
-	private GameDto dto = null;
 	
 	// 开始按钮和设置按钮
 	private JButton btnStart;
@@ -25,7 +24,7 @@ public class JPanelGame extends JPanel {
 	// 控制器对象
 	private GameControl gameControl = null;
 	
-	private void initLayer(){
+	private void initLayer(GameDto dto){
 		// 初始化层
 		lays = new Lay[]{
 				// 前两个变量是layer在整个界面的坐标	后面两个变量是layer的宽和高
@@ -75,15 +74,17 @@ public class JPanelGame extends JPanel {
 		});
 	}
 	
-	public JPanelGame(GameDto dto){
-		// 获得dto对象
-		this.dto = dto;
+	public JPanelGame(GameControl gameControl, GameDto dto){
+		// 设置游戏控制器
+		this.gameControl = gameControl;
 		// 设置布局为自动布局
 		this.setLayout(null);
 		// 初始化组件
-		initComponet();
+		this.initComponet();
 		// 初始化层
-		initLayer();
+		this.initLayer(dto);
+		// 安装键盘监听器
+		this.addKeyListener(new PlayerControl(gameControl, dto));
 	}
 	
 	/*
@@ -109,11 +110,6 @@ public class JPanelGame extends JPanel {
 	public void buttonSwitch(boolean onOff){
 		this.btnConfig.setEnabled(onOff);
 		this.btnStart.setEnabled(onOff);
-	}
-	
-	// 设置Panel的游戏控制器对象
-	public void setGameControl(GameControl gameControl) {
-		this.gameControl = gameControl;
 	}
 
 }
