@@ -1,6 +1,6 @@
 package utils;
 
-import java.io.*;
+//import java.io.*;
 
 // 统计项目src下的代码行数
 public class CodeCount{
@@ -10,9 +10,9 @@ public class CodeCount{
 	 * codeComments: 注释行数
 	 * codeBlank: 空行数
 	 * */
-    private static Integer code = 0;
-    private static Integer codeComments = 0;
-    private static Integer codeBlank = 0;
+//    private static Integer code = 0;
+//    private static Integer codeComments = 0;
+//    private static Integer codeBlank = 0;
     
     // for test
     public static void main(String[] args) {

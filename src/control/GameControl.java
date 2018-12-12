@@ -2,12 +2,15 @@ package control;
 
 import ui.JFrameGame;
 import ui.JPanelGame;
-import ui.cfg.FrameConfig;
+import ui.window.FrameConfig;
 import service.GameService;
 import service.GameTetris;
 import dao.*;
 import dto.GameDto;
-
+import java.util.Map;
+import java.util.HashMap;
+import java.awt.event.KeyEvent;
+import java.lang.reflect.Method;
 
 // 游戏控制器
 public class GameControl {
@@ -29,6 +32,9 @@ public class GameControl {
 	// 用户设置界面
 	private FrameConfig frameConfig;
 	
+	// 游戏行为控制
+	private Map<Integer, Method> actionList;
+	
 	// 游戏线程
 	private Thread gameThread = null;
 
@@ -47,40 +53,41 @@ public class GameControl {
 		this.dto.setDiskRecode(this.dataFromDisk.loadData());
 		// 创建游戏面板
 		this.panelGame= new JPanelGame(this, dto);		// 这里的this指把当前GameControl对象传进去
+		// 读取用户控制设置
+		this.setControlConfig();
 		// 初始化用户设置界面
 		this.frameConfig = new FrameConfig();
 		// 创建游戏窗口(安装游戏面板)
 		new JFrameGame(panelGame);
 	}
 	
-	// 控制器方向键 空格
-	public void KeySpace() {
-		this.gameService.KeySpace();
-		this.panelGame.repaint();		// 重绘页面
+	public void setControlConfig(){
+		// 创建键盘码和方法名的映射数组 -> 使用反射
+		this.actionList = new HashMap<Integer, Method>();
+		try{
+			actionList.put(KeyEvent.VK_SPACE, this.gameService.getClass().getMethod("KeyStop"));
+			actionList.put(KeyEvent.VK_UP, this.gameService.getClass().getMethod("KeyUp"));
+			actionList.put(KeyEvent.VK_DOWN, this.gameService.getClass().getMethod("KeyDown"));
+			actionList.put(KeyEvent.VK_LEFT, this.gameService.getClass().getMethod("KeyLeft"));
+			actionList.put(KeyEvent.VK_RIGHT, this.gameService.getClass().getMethod("KeyRight"));
+			actionList.put(KeyEvent.VK_1, this.gameService.getClass().getMethod("KeyFunDown"));
+			actionList.put(KeyEvent.VK_V, this.gameService.getClass().getMethod("KeyShadowSwitch"));
+			actionList.put(KeyEvent.VK_K, this.gameService.getClass().getMethod("kaigua"));
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 	}
-
-	// 控制器方向键  向上
-	public void KeyUp() {
-		this.gameService.KeyUp();
-		this.panelGame.repaint();		// 重绘页面
-	}
-
-	// 控制器方向键  向下
-	public void KeyDown() {
-		this.gameService.KeyDown();
-		this.panelGame.repaint();		// 重绘页面
-	}
-
-	// 控制器方向键  向左
-	public void KeyLeft() {
-		this.gameService.KeyLeft();
-		this.panelGame.repaint();		// 重绘页面
-	}
-
-	// 控制器方向键  向右
-	public void KeyRight() {
-		this.gameService.KeyRight();
-		this.panelGame.repaint();		// 重绘页面
+	
+	// 根据玩家控制(按键)来决定行为
+	public void actionByKeyCode(int keyCode){
+		try{
+			if(this.actionList.containsKey(keyCode)){
+				this.actionList.get(keyCode).invoke(this.gameService);
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		this.panelGame.repaint();
 	}
 	
 	// 显示玩家设置窗口
@@ -96,54 +103,49 @@ public class GameControl {
 		// 游戏数据初始化
 		this.gameService.startGame();
 		// 创建线程对象
-		this.gameThread = new Thread(){
-			@Override
-			public void run(){
-				// 刷新画面
-				panelGame.repaint();
-				// 主循环
-				while(true){
-					try {
-						// 等待0.5s
-						Thread.sleep(500);
-						// 游戏主行为 -> 方块下落
-						gameService.mainAction();
-						// 刷新画面
-						panelGame.repaint();	
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		};
+		this.gameThread = new MainThread();
 		// 启动线程
 		this.gameThread.start();
 		// 重新刷新页面
 		this.panelGame.repaint();		
 	}
-
-	// 瞬间下落
-	public void KeyFunDown(){
-		this.gameService.KeyFunDown();
-		this.panelGame.repaint();		// 重绘页面
+	
+	// 内部类
+	private class MainThread extends Thread{
+		@Override
+		public void run(){
+			// 刷新画面
+			panelGame.repaint();
+			// 主循环
+			while(true){
+				// 游戏结束主循环直接退出
+				if(!dto.isStart()){
+					afterLose();
+					break;
+				}
+				try {
+					// 等待0.5s
+					Thread.sleep(500);
+					// 如果暂停那么不执行主行为
+					if(dto.isPause()){
+						continue;
+					}
+					// 游戏主行为 -> 方块下落
+					gameService.mainAction();
+					// 刷新画面
+					panelGame.repaint();	
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
-	// 阴影开关
-	public void KeyShadowSwitch(){
-		this.gameService.KeyShadowSwitch();
-		this.panelGame.repaint();		// 重绘页面
-	}
-	
-	// 暂停游戏
-	public void KeyStop(){
-		this.gameService.KeyStop();
-		this.panelGame.repaint();		// 重绘页面
-	}
-	
-	// 作弊开挂
-	public void kaigua(){
-		this.gameService.kaigua();
-		this.panelGame.repaint();		// 重绘页面
+	// 失败之后的处理
+	public void afterLose(){
+		// 显示保存得分窗口
+		
+		// 使按钮可点击
 	}
 	
 }

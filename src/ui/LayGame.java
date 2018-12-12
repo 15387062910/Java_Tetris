@@ -30,6 +30,11 @@ public class LayGame extends Lay {
 
 		// 绘制游戏地图
 		this.drawMap(g);
+		
+		// 暂停
+		if(this.dto.isPause()){
+			this.drawImageAtCenter(Img.IMG_PAUSE, g);
+		}
 	}
 
 	// 绘制活动方块

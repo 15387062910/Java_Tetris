@@ -1,4 +1,4 @@
-package ui.cfg;
+package ui.window;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

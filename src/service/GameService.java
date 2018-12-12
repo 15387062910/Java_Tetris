@@ -2,9 +2,6 @@ package service;
 
 // 游戏逻辑层的接口
 public interface GameService {
-	// 控制器方向键 旋转
-	public boolean KeySpace();
-
 	// 控制器方向键 向上
 	public boolean KeyUp();
 

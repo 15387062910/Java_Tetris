@@ -19,5 +19,5 @@ Tetris
 * main: 项目主入口类包
 * service: 项目主逻辑类包
 * ui: 项目界面类包
-* ui.cgf: 项目的设置界面类包	
+* ui.window: 字界面类包
 * utils: 项目工具类包		

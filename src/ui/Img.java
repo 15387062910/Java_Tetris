@@ -67,6 +67,10 @@ public class Img {
 	public static final ImageIcon IMG_CONFIG = new ImageIcon(
 			"graphics/string/config.png");
 
+	// 暂停图片
+	public static final Image IMG_PAUSE = new ImageIcon(
+			"graphics/string/pause.png").getImage();
+
 	static {
 		// 下一个方块图片
 		NEXT_ACT = new Image[7];

@@ -41,16 +41,13 @@ public class GameTetris implements GameService{
 		this.dto = dto;
 	}
 
-	// 控制器方向键 空格键
-	@Override
-	public boolean KeySpace() {
-		this.KeyStop();
-		return true;
-	}
-
 	// 控制器方向键 向上
 	@Override
 	public boolean KeyUp() {
+		// 暂停限制
+		if (this.dto.isPause()) {
+			return true;
+		}
 		// 旋转
 		synchronized (this.dto) {
 			// 独占dto
@@ -62,6 +59,10 @@ public class GameTetris implements GameService{
 	// 控制器方向键 向下
 	@Override
 	public boolean KeyDown() {
+		// 暂停限制
+		if (this.dto.isPause()) {
+			return true;
+		}
 		synchronized (this.dto){
 			// 获得游戏地图对象
 			boolean[][] map = this.dto.getGameMap();
@@ -90,7 +91,8 @@ public class GameTetris implements GameService{
 			
 			// 检查游戏是否失败
 			if(this.isLose()){
-				this.afterLose();
+				// 结束游戏
+				this.dto.setStart(false);
 			}
 		}
 		
@@ -100,6 +102,10 @@ public class GameTetris implements GameService{
 	// 控制器方向键 向左
 	@Override
 	public boolean KeyLeft() {
+		// 暂停限制
+		if (this.dto.isPause()) {
+			return true;
+		}
 		synchronized (this.dto) {
 			this.dto.getGameAct().move(-1, 0, this.dto.getGameMap());
 		}
@@ -110,6 +116,10 @@ public class GameTetris implements GameService{
 	// 控制器方向键 向右
 	@Override
 	public boolean KeyRight() {
+		// 暂停限制
+		if (this.dto.isPause()) {
+			return true;
+		}
 		synchronized (this.dto) {
 			this.dto.getGameAct().move(1, 0, this.dto.getGameMap());
 		}
@@ -206,23 +216,20 @@ public class GameTetris implements GameService{
 		return false;
 	}
 	
-	// 游戏失败后的处理
-	private void afterLose(){
-		// 设置游戏开始状态为false
-		this.dto.setStart(false);
-		// TODO 关闭游戏主线程
-	}
-	
 	// 作弊开挂键
 	@Override
 	public void kaigua(){
 		this.plusPoint(3);
 	}
 	
-	// 方块快速下落
+	// 方块瞬间下落
 	@Override
 	public boolean KeyFunDown(){
-		// 不断调用方块下落函数实现方块快速下落
+		// 暂停限制
+		if (this.dto.isPause()) {
+			return true;
+		}
+		// 不断调用方块下落函数实现方块瞬间下落
 		while(this.KeyDown());
 		return true;
 	}
@@ -240,12 +247,14 @@ public class GameTetris implements GameService{
 	// 暂停游戏
 	@Override
 	public boolean KeyStop(){
-		// TODO
-		System.out.println("暂停游戏");
+		if(this.dto.isStart()){
+			this.dto.changePause();
+		}
 		
 		return true;
 	}
 	
+	// 游戏主行为(方块自动下落)
 	@Override
 	public void mainAction(){
 		this.KeyDown();

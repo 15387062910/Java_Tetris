@@ -123,6 +123,8 @@ public class GameDto {
 
 	// 是否开始游戏
 	private boolean start;
+	// 是否暂停游戏
+	private boolean pause;
 	// 是否显示阴影
 	private boolean showShadow;
 	
@@ -140,6 +142,18 @@ public class GameDto {
 
 	public void changeShowShadow() {
 		this.showShadow = !this.showShadow;
+	}
+
+	public void setPause(boolean pause) {
+		this.pause = pause;
+	}
+	
+	public boolean isPause(){
+		return this.pause;
+	}
+
+	public void changePause() {
+		this.pause = !this.pause;
 	}
 	
 
