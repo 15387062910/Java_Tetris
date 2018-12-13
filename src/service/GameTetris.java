@@ -137,6 +137,8 @@ public class GameTetris implements GameService{
 			this.dto.setGameAct(new GameAct(random.nextInt(MAX_TYPE)));
 			// 把游戏状态设置为开始
 			this.dto.setStart(true);
+			// dto初始化
+			this.dto.dtoInit();
 		}
 		
 		return true;
@@ -219,6 +221,7 @@ public class GameTetris implements GameService{
 	// 作弊开挂键
 	@Override
 	public void kaigua(){
+		this.dto.setCheat(true);
 		this.plusPoint(3);
 	}
 	

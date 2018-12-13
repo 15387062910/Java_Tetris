@@ -31,6 +31,13 @@ public abstract class LayData extends Lay {
 	public void showData(Image title, List<Player> players, Graphics g) {
 		// 绘制标题
 		g.drawImage(title, this.x + PADDING, this.y + PADDING, null);
+		if(players==null){
+			for (int i = 0; i < MAX_ROW; i++) {
+				this.drawRect(START_Y + i * (RECT_H + SPA), "NO DATA", "0",
+						0, 1000, g);
+			}
+			return;
+		}
 		for (int i = 0; i < MAX_ROW; i++) {
 			Player p = players.get(i);
 			int recodePoint = p.getPoint();

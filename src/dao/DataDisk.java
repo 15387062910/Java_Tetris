@@ -70,7 +70,7 @@ public class DataDisk implements Data {
 		try {
 			// 读取之前存的数据
 			String content = readFile();
-			System.out.println(content);
+			// System.out.println(content);
 			// 把之前存的数据和这次的数据一起存进去
 			FileOutputStream fs_out = new FileOutputStream(FILE_PATH);
 			DataOutputStream out = new DataOutputStream(fs_out);

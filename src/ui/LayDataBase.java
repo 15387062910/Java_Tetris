@@ -10,6 +10,10 @@ public class LayDataBase extends LayData {
 
 	public void paint(Graphics g) {
 		this.createWindow(g);
-		this.showData(Img.IMG_DB, this.dto.getDbRecode(), g);
+		// this.dto.getDbRecode()表示使用数据库
+		// this.showData(Img.IMG_DB, this.dto.getDbRecode(), g);
+		
+		// null表示不用数据库
+		this.showData(Img.IMG_DB, null, g);
 	}
 }

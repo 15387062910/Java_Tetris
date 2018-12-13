@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import utils.FrameUtil;
 
 // 用户设置界面
-public class FrameConfig extends JFrame{
+public class JFrameConfig extends JFrame{
 	/**
 	 * 
 	 */
@@ -60,7 +60,7 @@ public class FrameConfig extends JFrame{
 		return jtp;
 	}
 	
-	public FrameConfig(){
+	public JFrameConfig(){
 		// 设置布局
 		this.setLayout(new BorderLayout());
 		// 添加主界面
