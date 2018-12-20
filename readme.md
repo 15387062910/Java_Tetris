@@ -2,11 +2,12 @@ Tetris
 ==========
 
 ### 项目介绍
-	用Java开发一个俄罗斯方块
+	用Java的swing框架开发一个俄罗斯方块
 
 ### 项目目录结构
 * config: 配置
 * docs: 文档
+* finally: 最后成品
 * graphics: 用到的图片材料
 * lib: 第三方库
 * src: 源文件
